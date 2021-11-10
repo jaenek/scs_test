@@ -1,0 +1,39 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema",
+    "type": "object",
+    "properties": {
+        "status": {
+            "type": "string"
+        },
+        "componenets": {
+            "type": "object",
+            "properties": {
+                "diskSpace": {
+                    "type": "object",
+                    "properties": {
+                        "status": {
+                            "type": "string"
+                        },
+                        "details": {
+                            "type": "object",
+                            "properties": {
+                                "total": {
+                                    "type": "integer"
+                                },
+                                "free": {
+                                    "type": "integer"
+                                },
+                                "threshold": {
+                                    "type": "integer"
+                                }
+                            }
+                        }
+                    }
+                },
+                "ping": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

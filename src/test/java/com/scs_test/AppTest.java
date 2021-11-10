@@ -3,6 +3,7 @@ package com.scs_test;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
+import java.util.HashMap;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -13,6 +14,7 @@ import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.filter.log.ResponseLoggingFilter;
+import io.restassured.module.jsv.JsonSchemaValidator;
 
 /**
  * Unit test for Spring Currency Sample App.
@@ -39,15 +41,25 @@ public class AppTest {
         }
     };
 
-    @Test
-    public void testGold() {
-        RestAssured.given().spec(requestSpecification).when().get("/gold").then().assertThat().statusCode(200).log()
+    public void testBasic(String endpoint, String schemaPath) {
+        RestAssured.given().spec(requestSpecification).when().get(endpoint).then().assertThat().statusCode(200).body(JsonSchemaValidator.matchesJsonSchemaInClasspath(schemaPath)).log()
                 .all();
+    }
+
+    @Test
+    public void testEndpoints() {
+        HashMap<String, String> endpoints = new HashMap<String,String>();
+        endpoints.put("/gold", "gold.json");
+        endpoints.put("/health", "health.json");
+
+        for (String endpoint : endpoints.keySet()) {
+            testBasic(endpoint, endpoints.get(endpoint));
+        }
     }
 
     @Test
     public void testMid() {
         RestAssured.given().spec(requestSpecification).when().queryParam("currency", "usd").get("/mid").then()
-                .assertThat().statusCode(200).log().all();
+                .assertThat().statusCode(200).body(JsonSchemaValidator.matchesJsonSchemaInClasspath("currency.json")).log().all();
     }
 }
