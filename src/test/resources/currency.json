@@ -1,0 +1,38 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema",
+    "type": "object",
+    "properties": {
+        "ask": {
+            "type": "number"
+        },
+        "currency": {
+            "type": "string"
+        },
+        "effectiveDate": {
+            "type": ["string", "null"]
+        },
+        "mid": {
+            "type": "number"
+        },
+        "rates": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "ask": {
+                        "type": ["string", "null"]
+                    },
+                    "effectiveDate": {
+                        "type": "string"
+                    },
+                    "mid": {
+                        "type": "string"
+                    },
+                    "no": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    }
+}
